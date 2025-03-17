@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Application</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap"
+      rel="stylesheet"
+    />
+</head>
+
+<body
+{% if image is not None %}
+    style="background-image: url('{{ image }}');"
+{% else %}
+    style="background-image: url('https://images.pexels.com/photos/9754/mountains-clouds-forest-fog.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
+{% endif %}
+
+<div class="container">
+    <h1 class="heading">Weather App</h1>
+    
+    <form method="POST">
+      {% csrf_token %}
+      <input type="text" name="city" placeholder="Enter City">
+      <button type="submit" class="btn">Search</button>
+    </form>
+    <div class="weather">
+      <div class="left">
+        <h2 class="temp">{{ data.main.temp }}&#176; C</h2>
+        <h2 class="city">{{ city }}</h2>
+      </div>
+      <div class="right">
+        <div class="icon">
+          <p><img src="https://openweathermap.org/img/wn/{{ data.weather.0.icon }}.png" width="120px"></p>
+        </div>
+         <div class="condition">
+          <p>{{ data.weather.0.description }}</p>
+          <p>{{ day }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</body>
+</html>
